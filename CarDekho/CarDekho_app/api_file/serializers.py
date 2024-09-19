@@ -1,17 +1,24 @@
 from rest_framework import serializers
 from ..models import Carlist
 
-class Carserializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only = True)
-    name = serializers.CharField()
-    description = serializers.CharField()
-    active = serializers.BooleanField(read_only = True)
 
-    def create(self,validated_data):
-        return Carlist.objects.create(**validated_data)
+class Carserializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carlist
+        fields = "__all__" # -> This will include all the fields
+        # But if want to include only specific fields then you can explicitly mention them
+        # fields = ["name","description","active"]
+
+
+        # If you want to inlcude all the fields except few then instead of mentioning all the fields you can use "exclude" 
+        # exclude = ['name'] # -> This will include all the fields except name 
     
-    def update(self,instance,validated_data):
-        instance.name = validated_data.get('name',instance.name)
-        instance.description = validated_data.get('description',instance.description)
-        instance.active = validated_data.get('active',instance.active)
-
+    def validate_price(self,value):
+        if value <= 20000.00:
+            raise serializers.ValidationError('Price must be Higher then 20000.00')
+        return value
+    
+    def validate(self, data):
+        if data['name'] == data['description']:
+            raise serializers.ValidationError('Name and description must be different')
+        return data
