@@ -2,10 +2,6 @@ from django.db import models
 from django.core.exceptions import ValidationError
 # Create your models here.
 
-def alphaneumeric(value):
-    if str(value).isalnum():
-        raise ValidationError("Only alphabets and Number are allowed")
-    return value
 
 class Showroomlist(models.Model):
     name = models.CharField(max_length=30)
