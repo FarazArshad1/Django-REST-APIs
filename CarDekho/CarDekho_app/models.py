@@ -24,4 +24,4 @@ class Carlist(models.Model):
     showroom = models.ForeignKey(Showroomlist, on_delete = models.CASCADE, related_name = 'Showrooms',null = True)  
 
     def __str__(self):
-        return self.name
+        return f"{self.name}\n{self.chassisnumber if self.chassisnumber else 'No Chassis Number'}"
