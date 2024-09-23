@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ..models import Carlist, Showroomlist
-import re
 
 
 class ShowroomSerializer(serializers.ModelSerializer):
