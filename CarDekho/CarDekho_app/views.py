@@ -136,35 +136,41 @@ def car_detail_view(request,pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-class Showroom_Viewset(viewsets.ViewSet):
+class Showroom_Viewset(viewsets.ModelViewSet):
+    queryset = Showroomlist.objects.all()
+    serializer_class = ShowroomSerializer
 
-    def list(self, request):
-        serializer_context = {
-            'request': request,
-        }
-        queryset = Showroomlist.objects.all()
-        serializer = ShowroomSerializer(queryset, many=True,context=serializer_context)
-        return Response(serializer.data)
+
+
+# class Showroom_Viewset(viewsets.ViewSet):
+
+#     def list(self, request):
+#         serializer_context = {
+#             'request': request,
+#         }
+#         queryset = Showroomlist.objects.all()
+#         serializer = ShowroomSerializer(queryset, many=True,context=serializer_context)
+#         return Response(serializer.data)
     
-    def retrieve(self, request, pk=None):
-        serializer_context = {
-            'request': request,
-        }
-        queryset = Showroomlist.objects.all()
-        user = get_object_or_404(queryset, pk = pk)
-        serializer = ShowroomSerializer(user,context=serializer_context)
-        return Response(serializer.data)   
+#     def retrieve(self, request, pk=None):
+#         serializer_context = {
+#             'request': request,
+#         }
+#         queryset = Showroomlist.objects.all()
+#         user = get_object_or_404(queryset, pk = pk)
+#         serializer = ShowroomSerializer(user,context=serializer_context)
+#         return Response(serializer.data)   
 
-    def create(self, request):
-        serializer_context = {
-            'request': request,
-        }
-        serializer = ShowroomSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,context=serializer_context)
-        else:
-            return Response(serializer.errors, context=serializer_context, status= status.HTTP_400_BAD_REQUEST)
+#     def create(self, request):
+#         serializer_context = {
+#             'request': request,
+#         }
+#         serializer = ShowroomSerializer(data = request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data,context=serializer_context)
+#         else:
+#             return Response(serializer.errors, context=serializer_context, status= status.HTTP_400_BAD_REQUEST)
 
 class Showroom_View(APIView):
     # authentication_classes = [BasicAuthentication]
