@@ -6,7 +6,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
-
+from rest_framework import mixins
+from rest_framework import generics
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 # from django.http import HttpResponse
 # import json
@@ -79,6 +82,8 @@ def car_detail_view(request,pk):
     
 
 class Showroom_View(APIView):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         showroom = Showroomlist.objects.all()
         serializer = ShowroomSerializer(showroom, many=True, context = {'request' : request})
