@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Carlist, Showroomlist
+from .models import Carlist, Showroomlist, Review
 from django.http import JsonResponse
-from .api_file.serializers import Carserializer,ShowroomSerializer
+from .api_file.serializers import Carserializer,ShowroomSerializer, ReviewSerializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -10,6 +10,32 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+
+
+class ReviewDetail(mixins.RetrieveModelMixin,
+                   generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializers
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+
+
+class ReviewList(mixins.ListModelMixin,
+                 mixins.CreateModelMixin,
+                 generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serialzer_class = ReviewSerializers
+
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
 
 # from django.http import HttpResponse
 # import json
