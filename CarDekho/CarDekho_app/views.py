@@ -9,17 +9,21 @@ from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, DjangoModelPermissions
 
 
 class ReviewDetail(mixins.RetrieveModelMixin,
+                   mixins.CreateModelMixin,
                    generics.GenericAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializers
 
+    
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
-
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 
@@ -27,8 +31,10 @@ class ReviewList(mixins.ListModelMixin,
                  mixins.CreateModelMixin,
                  generics.GenericAPIView):
     queryset = Review.objects.all()
-    serialzer_class = ReviewSerializers
+    serializer_class = ReviewSerializers
 
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [DjangoModelPermissions]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
