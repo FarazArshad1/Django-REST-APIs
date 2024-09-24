@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 # from django.http import HttpResponse
@@ -82,7 +82,9 @@ def car_detail_view(request,pk):
     
 
 class Showroom_View(APIView):
-    authentication_classes = [BasicAuthentication]
+    # authentication_classes = [BasicAuthentication]
+    # permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
         showroom = Showroomlist.objects.all()
