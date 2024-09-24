@@ -12,36 +12,58 @@ from rest_framework.authentication import BasicAuthentication, SessionAuthentica
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, DjangoModelPermissions
 
 
-class ReviewDetail(mixins.RetrieveModelMixin,
-                   mixins.CreateModelMixin,
-                   generics.GenericAPIView):
+class ReviewList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializers
 
-    
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-
-class ReviewList(mixins.ListModelMixin,
-                 mixins.CreateModelMixin,
-                 generics.GenericAPIView):
+class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializers
 
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [DjangoModelPermissions]
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+
+"""  Concrete view classes in Django Rest Framework (DRF) are pre-built views
+    that combine generic views and mixins to provide common, ready-to-use API
+    behaviors for typical CRUD operations (Create, Read, Update, Delete).
+    These views are called concrete because they represent specific
+    implementations of common patterns, such as retrieving an object or listing objects,
+    as opposed to the more abstract and customizable generic views.
+
+    Concrete view classes simplify the process of building APIs by offering 
+    out-of-the-box functionality without needing to mix and match 
+    individual mixins or override methods. With these views, you only need
+    to specify the queryset and serializer_class, and DRF takes care of the rest."""
+
+# class ReviewDetail(mixins.RetrieveModelMixin,
+#                    mixins.CreateModelMixin,
+#                    generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializers
+
     
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+    
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
 
+
+# class ReviewList(mixins.ListModelMixin,
+#                  mixins.CreateModelMixin,
+#                  generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializers
+
+#     authentication_classes = [SessionAuthentication]
+#     permission_classes = [DjangoModelPermissions]
+
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+    
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+
+## ------------------------------------------------------------------------------------------------ ##
 
 # from django.http import HttpResponse
 # import json
