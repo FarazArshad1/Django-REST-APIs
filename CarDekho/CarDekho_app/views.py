@@ -13,9 +13,21 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, D
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 
-class ReviewList(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
+
+class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializers
+
+    def perform_create
+
+
+
+class ReviewList(generics.ListAPIView):
+    # queryset = Review.objects.all()
+    serializer_class = ReviewSerializers
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.filter.all(car = pk)
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()

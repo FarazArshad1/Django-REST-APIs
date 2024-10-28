@@ -12,6 +12,10 @@ urlpatterns = [
     path(r'',include(router.urls)),
     # path('showroom',views.Showroom_View.as_view(),name='Showroom views'),
     # path('showroom/<int:pk>',views.Showroom_Details.as_view(),name='Showroom_detail'),
-    path('review/<int:pk>', views.ReviewDetail.as_view(),name = 'review_list'),
-    path('review',views.ReviewList.as_view(),name = 'review_lists')
+    # path('review/<int:pk>', views.ReviewDetail.as_view(),name = 'review_list'),
+    # path('review',views.ReviewList.as_view(),name = 'review_lists'),
+    path('showroom/<int:pk>/review-create', views.ReviewCreate.as_view(), name = 'review_create'),
+    path('showroom/<int:pk>/review', views.ReviewList.as_view(), name = 'review_list'),
+    path('showroom/review/<int:pk>',views.ReviewDetail.as_vew(), name = 'review_detail')
+
 ]
